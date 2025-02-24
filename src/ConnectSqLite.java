@@ -110,21 +110,22 @@ public class ConnectSqLite {
             
             // Générer le nom du fichier avec horodatage
             LOG_FILE = getLogFileName();
-                
-            // Configuration du FileHandler avec notre formateur personnalisé
+            
+            // Nettoyer les handlers existants
+            for (Handler handler : LOGGER.getHandlers()) {
+                LOGGER.removeHandler(handler);
+            }
+            
+            // Configuration du FileHandler avec encodage UTF-8
             FileHandler fileHandler = new FileHandler(LOG_FILE, true);
+            fileHandler.setEncoding("UTF-8");  // Ajout de cette ligne
             fileHandler.setFormatter(new CustomFormatter());
             
-            // Supprimer les handlers existants
             LOGGER.setUseParentHandlers(false);
-            
-            // Ajouter le FileHandler au LOGGER
             LOGGER.addHandler(fileHandler);
-            
-            // Définir le niveau de log
             LOGGER.setLevel(Level.ALL);
             
-            writeLog("Nouveau fichier de log créé: " + LOG_FILE, Level.INFO);
+            LOGGER.info("Nouveau fichier de log créé: " + LOG_FILE);
             
         } catch (IOException e) {
             System.err.println("Erreur lors de la configuration du fichier de log: " + e.getMessage());
