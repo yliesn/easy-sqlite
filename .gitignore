@@ -1,4 +1,7 @@
 *.log
 *.jar
 *.md
+# Fichiers de base de données
 *.db
+db/*.db
+db/db_test.db
