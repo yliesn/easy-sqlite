@@ -1,0 +1,7 @@
+[2025-02-22 15:02:33.419] [INFO] Nouveau fichier de log créé: src/logs/database_2025-02-22_15-02-33.log
+[2025-02-22 15:02:33.428] [INFO] Configuration chargée avec succès. URL de la base: jdbc:sqlite:db/db_test.db
+[2025-02-22 15:02:33.630] [INFO] Connexion à SQLite établie avec succès
+[2025-02-22 15:02:33.637] [INFO] Requête : " SELECT * FROM employees "
+Params[]
+[2025-02-22 15:02:33.641] [INFO] Requête SELECT exécutée avec succès, 4 résultats récupérés
+[2025-02-22 15:02:33.642] [INFO] Connexion fermée avec succès

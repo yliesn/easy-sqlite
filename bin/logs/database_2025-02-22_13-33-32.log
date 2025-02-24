@@ -1,0 +1,53 @@
+[2025-02-22 13:33:32.356] [INFO] Nouveau fichier de log créé: src/logs/database_2025-02-22_13-33-32.log
+[2025-02-22 13:33:32.366] [INFO] Configuration chargée avec succès. URL de la base: jdbc:sqlite:db/db_test.db
+[2025-02-22 13:33:32.568] [INFO] Connexion à SQLite établie avec succès
+[2025-02-22 13:33:32.582] [INFO] Requête : " INSERT INTO employees (nom, prenom, departement) VALUES (?, ?, ?) " + params[Ylies, Nejara, IT]
+[2025-02-22 13:33:32.599] [INFO] Insertion réussie: 1 ligne(s) affectée(s)
+[2025-02-22 13:33:32.599] [INFO] Connexion fermée avec succès
+[2025-02-22 13:33:32.601] [INFO] Connexion à SQLite établie avec succès
+[2025-02-22 13:33:32.601] [INFO] Requête : " INSERT INTO employees (nom, prenom, departement) VALUES (?, ?, ?) " + params[null, TEST, IT]
+[2025-02-22 13:33:32.609] [INFO] Insertion réussie: 1 ligne(s) affectée(s)
+[2025-02-22 13:33:32.609] [INFO] Connexion fermée avec succès
+[2025-02-22 13:33:32.610] [INFO] Connexion à SQLite établie avec succès
+[2025-02-22 13:33:32.621] [SEVERE] Erreur SQL lors de l'insertion - Code: 1, État: null, Message: [SQLITE_ERROR] SQL error or missing database (table employees has no column named colonne_inexistante)
+Exception: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table employees has no column named colonne_inexistante)
+	at org.sqlite.core.DB.newSQLException(DB.java:1179)
+	at org.sqlite.core.DB.newSQLException(DB.java:1190)
+	at org.sqlite.core.DB.throwex(DB.java:1150)
+	at org.sqlite.core.NativeDB.prepare_utf8(Native Method)
+	at org.sqlite.core.NativeDB.prepare(NativeDB.java:135)
+	at org.sqlite.core.DB.prepare(DB.java:264)
+	at org.sqlite.core.CorePreparedStatement.<init>(CorePreparedStatement.java:46)
+	at org.sqlite.jdbc3.JDBC3PreparedStatement.<init>(JDBC3PreparedStatement.java:32)
+	at org.sqlite.jdbc4.JDBC4PreparedStatement.<init>(JDBC4PreparedStatement.java:25)
+	at org.sqlite.jdbc4.JDBC4Connection.prepareStatement(JDBC4Connection.java:34)
+	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:225)
+	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:205)
+	at ConnectSqLite.executeInsert(ConnectSqLite.java:210)
+	at App.main(App.java:38)
+[2025-02-22 13:33:32.622] [WARNING] Erreur de syntaxe dans la requête
+[2025-02-22 13:33:32.622] [WARNING] Requête : " INSERT INTO employees (colonne_inexistante) VALUES (?) " + params[test]
+[2025-02-22 13:33:32.623] [INFO] Connexion fermée avec succès
+[2025-02-22 13:33:32.624] [INFO] Connexion à SQLite établie avec succès
+[2025-02-22 13:33:32.624] [INFO] Requête : " SELECT * FROM employees WHERE departement = ? AND statut = ? " + params[IT, 1]
+[2025-02-22 13:33:32.625] [INFO] Requête SELECT exécutée avec succès
+[2025-02-22 13:33:32.626] [INFO] Connexion à SQLite établie avec succès
+[2025-02-22 13:33:32.627] [INFO] Requête : " SELECT nom, prenom, salaire, departement FROM employees WHERE salaire > ? " + params[50000.0]
+[2025-02-22 13:33:32.627] [INFO] Requête SELECT exécutée avec succès, 0 résultats récupérés
+[2025-02-22 13:33:32.627] [INFO] Connexion fermée avec succès
+[2025-02-22 13:33:32.628] [INFO] Connexion à SQLite établie avec succès
+[2025-02-22 13:33:32.628] [INFO] Requête : " UPDATE employees SET salaire = ? WHERE id = ? " + params[60000.0, 1]
+[2025-02-22 13:33:32.628] [WARNING] Aucune ligne modifiée
+[2025-02-22 13:33:32.628] [INFO] Connexion fermée avec succès
+[2025-02-22 13:33:32.629] [INFO] Connexion à SQLite établie avec succès
+[2025-02-22 13:33:32.629] [INFO] Requête : " UPDATE employees SET salaire = salaire * 1.1 WHERE departement = ? " + params[IT]
+[2025-02-22 13:33:32.630] [INFO] Mise à jour réussie: 2 ligne(s) modifiée(s)
+[2025-02-22 13:33:32.630] [INFO] Connexion fermée avec succès
+[2025-02-22 13:33:32.631] [INFO] Connexion à SQLite établie avec succès
+[2025-02-22 13:33:32.631] [INFO] Requête : " DELETE FROM employees WHERE id = ? " + params[6]
+[2025-02-22 13:33:32.632] [WARNING] Aucune ligne supprimée
+[2025-02-22 13:33:32.632] [INFO] Connexion fermée avec succès
+[2025-02-22 13:33:32.632] [INFO] Connexion à SQLite établie avec succès
+[2025-02-22 13:33:32.633] [INFO] Requête : " DELETE FROM employees WHERE statut = ? " + params[1]
+[2025-02-22 13:33:32.633] [WARNING] Aucune ligne supprimée
+[2025-02-22 13:33:32.633] [INFO] Connexion fermée avec succès
