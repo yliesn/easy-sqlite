@@ -1,7 +1,8 @@
+# Ignore tous les fichiers de la base de données
+*.db
+
+# Logs (ceux-ci fonctionnent déjà)
 *.log
+sqlite-jdbc-3.49.1.0.jar
 *.jar
 *.md
-# Fichiers de base de données
-*.db
-db/*.db
-db/db_test.db
