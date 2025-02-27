@@ -3,6 +3,5 @@
 
 # Logs (ceux-ci fonctionnent déjà)
 *.log
-sqlite-jdbc-3.49.1.0.jar
 *.jar
 *.md

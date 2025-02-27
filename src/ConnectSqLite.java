@@ -143,7 +143,7 @@ public class ConnectSqLite {
         properties = new Properties();
         try (FileInputStream fis = new FileInputStream(CONFIG_FILE)) {
             properties.load(fis);
-            databaseUrl = properties.getProperty("database.url", "jdbc:sqlite:db/planning.db");
+            databaseUrl = properties.getProperty("database.url", "jdbc:sqlite:db/db.db");
             
             // Chargement du pilote SQLite
             Class.forName("org.sqlite.JDBC");

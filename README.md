@@ -28,7 +28,6 @@ La configuration de la base de données est définie dans le fichier `config/dat
 ```properties
 database.url=jdbc:sqlite:db/bdd.db
 database.timeout=30
-database.journal_mode=WAL
 ```
 
 ## Fonctionnalités
