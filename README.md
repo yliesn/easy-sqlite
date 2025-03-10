@@ -5,7 +5,7 @@ Ce projet fournit une classe utilitaire pour gérer les connexions et opération
 ## Structure du projet
 
 ```
-TEST_BDD/
+BDD_Manager/
 ├── .vscode/
 ├── bin/
 │   ├── App_test.class
@@ -16,7 +16,6 @@ TEST_BDD/
 ├── src/
 │   ├── App_test.java
 │   ├── ConnectSqLite.java
-│   └── logs/
 ├── .gitignore
 └── README.md
 ```
