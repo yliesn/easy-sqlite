@@ -24,8 +24,8 @@ import java.util.logging.*;
  * Classe utilitaire pour gérer les connexions et opérations avec une base de données SQLite.
  * Cette classe fournit des méthodes pour exécuter des requêtes SQL et gérer les logs.
  */
-public class Sqlite {
-    private static final Logger LOGGER = Logger.getLogger(Sqlite.class.getName());
+public class SqliteManager {
+    private static final Logger LOGGER = Logger.getLogger(SqliteManager.class.getName());
     private static final String CONFIG_FILE = "config/database.properties";
     private static String LOG_FILE;
     private static String LOG_DIRECTORY = "logs";
