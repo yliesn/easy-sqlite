@@ -13,6 +13,7 @@ import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,16 +24,15 @@ import java.util.logging.*;
  * Classe utilitaire pour gérer les connexions et opérations avec une base de données SQLite.
  * Cette classe fournit des méthodes pour exécuter des requêtes SQL et gérer les logs.
  */
-public class ConnectSqLite {
-    private static final Logger LOGGER = Logger.getLogger(ConnectSqLite.class.getName());
+public class Sqlite {
+    private static final Logger LOGGER = Logger.getLogger(Sqlite.class.getName());
     private static final String CONFIG_FILE = "config/database.properties";
     private static String LOG_FILE;
-    private static final String LOG_DIRECTORY = "src/logs";
-    // private static final String LOG_FILE = LOG_DIRECTORY + "/database.log";
+    private static String LOG_DIRECTORY = "logs";
     private static String databaseUrl;
     private static Properties properties;
 
-    // Dans la classe ConnectSqLite
+    // Dans la classe Sqlite
     private static String getLogFileName() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
@@ -101,13 +101,15 @@ public class ConnectSqLite {
      * Crée le dossier de logs s'il n'existe pas et configure le format des logs.
      */
     private static void setupLogger() {
-        try {
+        properties = new Properties();
+        try (FileInputStream fis = new FileInputStream(CONFIG_FILE)) {
             // Créer le dossier logs s'il n'existe pas
+            properties.load(fis);
+            LOG_DIRECTORY = properties.getProperty("database.logURL", "logs");
             Path logPath = Paths.get(LOG_DIRECTORY);
             if (!Files.exists(logPath)) {
                 Files.createDirectories(logPath);
             }
-            
             // Générer le nom du fichier avec horodatage
             LOG_FILE = getLogFileName();
             
@@ -236,7 +238,8 @@ public class ConnectSqLite {
             }
 
             // Exécution de la requête
-            writeLog( "Requête : \" "+insertQuery + " \"\nParams" + java.util.Arrays.toString(params), Level.INFO);
+            writeLog( "Requête :  "+insertQuery, Level.INFO);
+            writeLog("Params" + Arrays.toString(params), Level.INFO);
             int rowsAffected = pstmt.executeUpdate();
             success = (rowsAffected > 0);
             
@@ -261,7 +264,9 @@ public class ConnectSqLite {
                     break;
                 case 1: // SQLITE_ERROR
                     writeLog("Erreur de syntaxe dans la requête", Level.WARNING);
-                    writeLog( "Requête : \" "+insertQuery + " \"\nParams" + java.util.Arrays.toString(params), Level.WARNING);
+                    writeLog( "Requête :  "+insertQuery, Level.WARNING);
+                    writeLog("Params" + Arrays.toString(params), Level.INFO);
+
                     break;
                 // Ajoutez d'autres cas selon vos besoins
             }
@@ -331,14 +336,17 @@ public class ConnectSqLite {
             }
 
 
-            writeLog( "Requête : \" "+selectQuery + " \"\nParams" + java.util.Arrays.toString(params), Level.INFO);
+            writeLog( "Requête :  "+selectQuery, Level.INFO);
+            writeLog("Params" + Arrays.toString(params), Level.INFO);
             rs = pstmt.executeQuery();
             writeLog("Requête SELECT exécutée avec succès", Level.INFO);
             return rs;
 
         } catch (SQLException e) {
             writeLog("Erreur lors de l'exécution de la requête SELECT: " + e.getMessage(), Level.SEVERE, e);
-            writeLog( "Requête : \" "+selectQuery + " \"\nParams" + java.util.Arrays.toString(params), Level.WARNING);
+            writeLog( "Requête :  "+selectQuery , Level.WARNING);
+            writeLog("Params" + Arrays.toString(params), Level.INFO);
+
             return null;
         }
     }
@@ -393,7 +401,8 @@ public class ConnectSqLite {
                 }
             }
 
-            writeLog( "Requête : \" "+selectQuery + " \"\nParams" + java.util.Arrays.toString(params), Level.INFO);
+            writeLog( "Requête :  "+selectQuery , Level.INFO);
+            writeLog("Params" + Arrays.toString(params), Level.INFO);
             rs = pstmt.executeQuery();
             
             ResultSetMetaData metaData = rs.getMetaData();
@@ -414,7 +423,8 @@ public class ConnectSqLite {
 
         } catch (SQLException e) {
             writeLog("Erreur lors de l'exécution de la requête SELECT: " + e.getMessage(), Level.SEVERE, e);
-            writeLog( "Requête : \" "+selectQuery + " \"\nParams" + java.util.Arrays.toString(params), Level.WARNING);
+            writeLog( "Requête :  "+selectQuery , Level.WARNING);
+            writeLog("Params" + Arrays.toString(params), Level.INFO);
             return results;
         } finally {
             try {
@@ -476,7 +486,8 @@ public class ConnectSqLite {
                 }
             }
 
-            writeLog( "Requête : \" "+updateQuery + " \"\nParams" + java.util.Arrays.toString(params), Level.INFO);
+            writeLog( "Requête :  "+updateQuery , Level.INFO);
+            writeLog("Params" + Arrays.toString(params), Level.INFO);
             int rowsAffected = pstmt.executeUpdate();
             success = (rowsAffected > 0);
 
@@ -488,7 +499,8 @@ public class ConnectSqLite {
 
         } catch (SQLException e) {
             writeLog("Erreur lors de la mise à jour: " + e.getMessage(), Level.SEVERE, e);
-            writeLog( "Requête : \" "+updateQuery + " \"\nParams" + java.util.Arrays.toString(params), Level.WARNING);
+            writeLog("Params" + Arrays.toString(params), Level.INFO);
+            writeLog( "Requête :  "+updateQuery , Level.WARNING);
             success = false;
         } finally {
             try {
@@ -548,7 +560,8 @@ public class ConnectSqLite {
             }
 
 
-            writeLog( "Requête : \" "+deleteQuery + " \"\nParams" + java.util.Arrays.toString(params), Level.INFO);
+            writeLog( "Requête :  "+deleteQuery , Level.INFO);
+            writeLog("Params" + Arrays.toString(params), Level.INFO);
             int rowsAffected = pstmt.executeUpdate();
             success = (rowsAffected > 0);
 
@@ -560,7 +573,8 @@ public class ConnectSqLite {
 
         } catch (SQLException e) {
             writeLog("Erreur lors de la suppression: " + e.getMessage(), Level.SEVERE, e);
-            writeLog( "Requête : \" "+deleteQuery + " \"\nParams" + java.util.Arrays.toString(params), Level.WARNING);
+            writeLog( "Requête :  "+deleteQuery, Level.WARNING);
+            writeLog("Params" + Arrays.toString(params), Level.INFO);
             success = false;
         } finally {
             try {

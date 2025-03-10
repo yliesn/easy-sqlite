@@ -10,7 +10,7 @@ public class App_test {
         // Test d'une insertion normale
         String insertQuery = "INSERT INTO employees (nom, prenom, departement) VALUES (?, ?, ?)";
         
-        boolean resultat = ConnectSqLite.executeInsert(insertQuery,
+        boolean resultat = Sqlite.executeInsert(insertQuery,
             "Ylies",
             "Nejara",
             "IT"
@@ -23,7 +23,7 @@ public class App_test {
         }
 
         // Test avec une erreur (par exemple, violation de contrainte)
-        resultat = ConnectSqLite.executeInsert(insertQuery,
+        resultat = Sqlite.executeInsert(insertQuery,
             null,  // Erreur si nom ne peut pas être null
             "TEST",
             "IT"
@@ -35,7 +35,7 @@ public class App_test {
 
         // Test avec une requête mal formée
         String requeteInvalide = "INSERT INTO employees (colonne_inexistante) VALUES (?)";
-        resultat = ConnectSqLite.executeInsert(requeteInvalide, "test");
+        resultat = Sqlite.executeInsert(requeteInvalide, "test");
         
         if (!resultat) {
             System.out.println("Échec attendu avec une requête invalide.");
@@ -45,7 +45,7 @@ public class App_test {
         
         // Exemple 1 : Utilisation de executeSelect avec ResultSet
         String query1 = "SELECT * FROM employees WHERE departement = ? AND statut = ?";
-        try (ResultSet rs = ConnectSqLite.executeSelect(query1, "IT", 1)) {
+        try (ResultSet rs = Sqlite.executeSelect(query1, "IT", 1)) {
             if (rs != null) {
                 while (rs.next()) {
                     System.out.printf("%s %s - %s%n", 
@@ -61,7 +61,7 @@ public class App_test {
 
         // Exemple 2 : Utilisation de executeSelectAndGetResults
         String query2 = "SELECT nom, prenom, salaire, departement FROM employees WHERE salaire > ?";
-        List<Map<String, Object>> results2 = ConnectSqLite.executeSelectAndGetResults(query2, 50000.0);
+        List<Map<String, Object>> results2 = Sqlite.executeSelectAndGetResults(query2, 50000.0);
         
         
         for (Map<String, Object> row : results2) {
@@ -77,7 +77,7 @@ public class App_test {
         
         // Exemple de mise à jour : augmenter le salaire d'un employé
         String updateQuery = "UPDATE employees SET salaire = ? WHERE id = ?";
-        boolean resultat3 = ConnectSqLite.executeUpdate(updateQuery, 60000.00, 1);
+        boolean resultat3 = Sqlite.executeUpdate(updateQuery, 60000.00, 1);
         
         if (resultat3) {
             System.out.println("Mise à jour du salaire réussie");
@@ -87,7 +87,7 @@ public class App_test {
 
         // Exemple de mise à jour multiple : augmenter le salaire des employés IT
         String updateMultipleQuery = "UPDATE employees SET salaire = salaire * 1.1 WHERE departement = ?";
-        resultat3 = ConnectSqLite.executeUpdate(updateMultipleQuery, "IT");
+        resultat3 = Sqlite.executeUpdate(updateMultipleQuery, "IT");
         
         if (resultat3) {
             System.out.println("Augmentation des salaires IT réussie");
@@ -97,7 +97,7 @@ public class App_test {
 
         // Exemple de suppression : supprimer un employé par son ID
         String deleteQuery = "DELETE FROM employees WHERE id = ?";
-        resultat3 = ConnectSqLite.executeDelete(deleteQuery, 6);
+        resultat3 = Sqlite.executeDelete(deleteQuery, 6);
         
         if (resultat3) {
             System.out.println("Suppression de l'employé réussie");
@@ -107,7 +107,7 @@ public class App_test {
 
         // Exemple de suppression multiple : supprimer tous les employés inactifs
         String deleteMultipleQuery = "DELETE FROM employees WHERE statut = ?";
-        resultat3 = ConnectSqLite.executeDelete(deleteMultipleQuery, 1);
+        resultat3 = Sqlite.executeDelete(deleteMultipleQuery, 1);
         
         if (resultat3) {
             System.out.println("Suppression des employés inactifs réussie");
